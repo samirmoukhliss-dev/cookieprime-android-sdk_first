@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#6200EE</color>
+    <color name="colorPrimaryDark">#3700B3</color>
+    <color name="colorAccent">#03DAC5</color>
+    
+    <!-- Material Design Colors -->
+    <color name="primary">#6200EE</color>
+    <color name="primaryVariant">#3700B3</color>
+    <color name="secondary">#03DAC5</color>
+    <color name="secondaryVariant">#018786</color>
+    
+    <!-- Background Colors -->
+    <color name="background">#FFFFFF</color>
+    <color name="surface">#FFFFFF</color>
+    <color name="error">#B00020</color>
+    
+    <!-- Text Colors -->
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="onSecondary">#000000</color>
+    <color name="onBackground">#000000</color>
+    <color name="onSurface">#000000</color>
+    <color name="onError">#FFFFFF</color>
+    
+    <!-- UI Colors -->
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+    <color name="divider">#E0E0E0</color>
+    <color name="disabled">#9E9E9E</color>
+    
+    <!-- Status Colors -->
+    <color name="success">#4CAF50</color>
+    <color name="warning">#FF9800</color>
+    <color name="info">#2196F3</color>
+</resources>

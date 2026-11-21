@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- Optional: For debug overlay -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" 
+        tools:ignore="ProtectedPermissions" />
+
+    <application>
+        <!-- Auto-initialization provider -->
+        <provider
+            android:name="androidx.startup.InitializationProvider"
+            android:authorities="${applicationId}.androidx-startup"
+            android:exported="false"
+            tools:node="merge">
+            
+            <meta-data
+                android:name="com.cookieprime.consent.initializer.CookiePrimeInitializer"
+                android:value="androidx.startup" />
+        </provider>
+
+        <!-- Consent Activity -->
+        <activity
+            android:name="com.cookieprime.consent.ui.ConsentActivity"
+            android:exported="false"
+            android:theme="@style/Theme.CookiePrime"
+            tools:ignore="LockedOrientationActivity" />
+            
+        <!-- REMOVE WorkManager Initializer - Let WorkManager auto-initialize -->
+        <!-- <provider
+            android:name="androidx.work.impl.WorkManagerInitializer"
+            android:authorities="${applicationId}.workmanager-init"
+            android:exported="false" /> -->
+            
+    </application>
+</manifest>

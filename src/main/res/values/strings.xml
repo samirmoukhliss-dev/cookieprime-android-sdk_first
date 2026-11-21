@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Info -->
+    <string name="app_name">CookiePrime Consent</string>
+    <string name="library_name">CookiePrime Consent SDK</string>
+    
+    <!-- Consent Activity -->
+    <string name="consent_title">Privacy Choices</string>
+    <string name="consent_description">We respect your privacy. Choose which data processing activities you allow.</string>
+    <string name="accept_all">Accept All</string>
+    <string name="save_selection">Save Selection</string>
+    <string name="reject_all">Reject All</string>
+    <string name="essential_required">(Required)</string>
+    
+    <!-- Category Labels -->
+    <string name="category_essential">Essential</string>
+    <string name="category_analytics">Analytics &amp; Performance</string>
+    <string name="category_advertising">Personalized Advertising</string>
+    <string name="category_social">Social Features</string>
+    <string name="category_location">Location Services</string>
+    <string name="category_personalization">Personalized Content</string>
+    <string name="category_performance">Performance Monitoring</string>
+    
+    <!-- Category Descriptions -->
+    <string name="category_essential_desc">Required for basic app functionality</string>
+    <string name="category_analytics_desc">Help us improve the app by collecting usage data and crash reports</string>
+    <string name="category_advertising_desc">Show you relevant advertisements based on your interests</string>
+    <string name="category_social_desc">Enable social sharing and interactions</string>
+    <string name="category_location_desc">Provide location-based features and services</string>
+    <string name="category_personalization_desc">Customize your experience with personalized content</string>
+    <string name="category_performance_desc">Monitor app performance and detect issues</string>
+    
+    <!-- Button States -->
+    <string name="saving">Saving…</string>
+    <string name="saved">Saved!</string>
+    <string name="error">Error</string>
+    
+    <!-- Empty States -->
+    <string name="no_categories">No consent categories available</string>
+    <string name="loading_categories">Loading privacy options…</string>
+</resources>

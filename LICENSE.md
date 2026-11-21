@@ -1,0 +1,88 @@
+\# CookiePrime SDK License Agreement
+
+
+
+Copyright (c) 2026 CookiePrime. All Rights Reserved.
+
+
+
+This software and its source code are provided for evaluation, integration,
+
+and personal use. By downloading, copying, or using this software, you agree
+
+to the terms below.
+
+
+
+\## 1. Grant of License
+
+
+
+CookiePrime grants you a non-exclusive, non-transferable, revocable license
+
+to integrate the CookiePrime Android SDK into your applications for the
+
+purpose of consent management.
+
+
+
+\## 2. Permitted Use
+
+
+
+You may:
+
+\- Read, study, and modify the source code for your own integration
+
+\- Include the SDK in your applications
+
+\- Distribute applications that contain the SDK
+
+
+
+\## 3. Restrictions
+
+
+
+You may not:
+
+\- Sell, sublicense, or redistribute this SDK as a standalone product
+
+\- Represent this SDK as your own original work
+
+\- Remove copyright notices from source files
+
+
+
+\## 4. No Warranty
+
+
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+
+
+\## 5. Limitation of Liability
+
+
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+
+OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
+
+USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+
+
+\---
+
+
+
+For commercial licensing inquiries, contact samir.moukhliss@cookieprime.com.
+

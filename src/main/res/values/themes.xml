@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Base application theme for SDK -->
+    <style name="Theme.CookiePrime" parent="Theme.MaterialComponents.Light.Dialog">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">?attr/colorPrimaryDark</item>
+        <item name="android:navigationBarColor">@color/background</item>
+        
+        <!-- Dialog specific -->
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:windowAnimationStyle">@style/DialogAnimation</item>
+        
+        <!-- Text appearances -->
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        
+        <!-- Button styles -->
+        <item name="materialButtonStyle">@style/Widget.CookiePrime.Button</item>
+        <item name="switchStyle">@style/Widget.CookiePrime.Switch</item>
+    </style>
+    
+    <!-- For the ConsentActivity override -->
+    <style name="Theme.AppCompat.Light.Dialog" parent="Theme.CookiePrime">
+        <!-- Inherits from above -->
+    </style>
+    
+    <!-- Custom Button Style -->
+    <style name="Widget.CookiePrime.Button" parent="Widget.MaterialComponents.Button">
+        <item name="android:minHeight">48dp</item>
+        <item name="android:paddingStart">24dp</item>
+        <item name="android:paddingEnd">24dp</item>
+        <item name="cornerRadius">8dp</item>
+        <item name="android:textAllCaps">false</item>
+    </style>
+    
+    <!-- Custom Switch Style -->
+    <style name="Widget.CookiePrime.Switch" parent="Widget.AppCompat.CompoundButton.Switch">
+        <item name="android:padding">8dp</item>
+    </style>
+    
+    <!-- Dialog Animation -->
+    <style name="DialogAnimation">
+        <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
+        <item name="android:windowExitAnimation">@android:anim/fade_out</item>
+    </style>
+</resources>

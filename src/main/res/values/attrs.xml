@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Custom attributes for the SDK -->
+    <declare-styleable name="ConsentCategoryView">
+        <attr name="categoryTitle" format="string" />
+        <attr name="categoryDescription" format="string" />
+        <attr name="categoryRequired" format="boolean" />
+        <attr name="categoryEnabled" format="boolean" />
+    </declare-styleable>
+    
+    <!-- Custom button attributes -->
+    <declare-styleable name="CookiePrimeButton">
+        <attr name="buttonType" format="enum">
+            <enum name="primary" value="0" />
+            <enum name="secondary" value="1" />
+            <enum name="danger" value="2" />
+        </attr>
+        <attr name="cornerRadius" format="dimension" />
+        <attr name="elevation" format="dimension" />
+    </declare-styleable>
+</resources>
