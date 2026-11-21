@@ -1,20 +1,15 @@
 # 🍪 CookiePrime Android SDK
 
-A consent management SDK for Android that automatically detects tracking SDKs
-in your app, presents a GDPR/CCPA-compliant consent UI, and configures those
-SDKs at runtime based on the user's choices.
+A consent management SDK for Android that automatically detects tracking SDKs in your app, presents a GDPR/CCPA-compliant consent UI, and configures those SDKs at runtime based on the user's choices.
 
 ## Features
 
-- **Automatic SDK detection** — scans for Firebase, Facebook, Google Ads,
-  AppsFlyer, Adjust, Mixpanel, Amplitude, and more
+- **Automatic SDK detection** — scans for Firebase, Facebook, Google Ads, AppsFlyer, Adjust, Mixpanel, Amplitude, and more
 - **Consent UI** — Material Design dialog with per-category toggles
 - **Runtime configuration** — SDKs are enabled/disabled based on consent
-- **Offline support** — Room database stores consent locally; WorkManager
-  syncs when the network is available
+- **Offline support** — Room database stores consent locally; WorkManager syncs when the network is available
 - **IAB TCF 2.2** — generates a TC string compatible with the IAB framework
-- **Google Consent Mode v2** — sets `ad_storage`, `analytics_storage`,
-  `ad_user_data`, `ad_personalization` signals
+- **Google Consent Mode v2** — sets `ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization` signals
 - **Debug overlay** — optional on-screen debug panel in development builds
 
 ## Requirements
@@ -23,40 +18,36 @@ SDKs at runtime based on the user's choices.
 - Kotlin 1.9+
 - Java 17 for building
 
-## Installation
+## 📦 Installation
 
 Build the AAR from source:
 
 ```bash
 ./gradlew assembleRelease
+```
 
+The output is at `build/outputs/aar/cookieprime-android-sdk-release.aar`.
 
+Copy it into your app's `libs/` folder and reference it in `build.gradle`:
 
-The output is at build/outputs/aar/cookieprime-android-sdk-release.aar.
-
-
-Copy it into your app's libs/ folder and reference it in build.gradle:
-
-groovy
+```groovy
 dependencies {
     implementation files('libs/cookieprime-android-sdk-release.aar')
 }
+```
 
+## Quick Start
 
+### 1. Add permissions
 
-Quick Start
-
-
-
-1. Add permissions
-
-xml
+```xml
 <uses-permission android:name="android.permission.INTERNET" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+```
 
-2. Initialize in your Application class
+### 2. Initialize in your `Application` class
 
-kotlin
+```kotlin
 class MyApp : Application() {
     override fun onCreate() {
         super.onCreate()
@@ -66,27 +57,28 @@ class MyApp : Application() {
         }
     }
 }
+```
 
-3. Show the consent dialog
+### 3. Show the consent dialog
 
-kotlin
+```kotlin
 // In your first Activity
 lifecycleScope.launch {
     ConsentSDK.getInstance().showConsentIfNeeded(this@MainActivity)
 }
+```
 
-4. Check consent before using an SDK
+### 4. Check consent before using an SDK
 
-kotlin
+```kotlin
 if (ConsentSDK.isAnalyticsConsentGiven) {
     FirebaseAnalytics.getInstance(context).logEvent("app_open", null)
 }
+```
 
+## Project Structure
 
-
-
-Project Structure
-
+```
 src/main/java/com/cookieprime/
 ├── CookiePrime.kt                    # Public entry point
 └── consent/
@@ -104,11 +96,12 @@ src/main/java/com/cookieprime/
     ├── utils/                        # Helpers
     ├── work/                         # WorkManager workers
     └── wrappers/                     # Safe SDK wrappers
+```
 
+## License
 
-License
+Proprietary. See [LICENSE.md](LICENSE.md) for details.
 
-Proprietary. See LICENSE.md for details.
+## Support
 
-Support
 For issues and questions, open a GitHub issue or email samir.moukhliss@cookieprime.com.
