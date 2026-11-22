@@ -1,16 +1,18 @@
-# 🍪 CookiePrime Android SDK
+# CookiePrime Android SDK
 
-A consent management SDK for Android that automatically detects tracking SDKs in your app, presents a GDPR/CCPA-compliant consent UI, and configures those SDKs at runtime based on the user's choices.
+A lightweight (~380 KB) on-device consent management SDK for Android that scans for third-party tracking SDKs in your app, presents a customizable consent UI, and enforces user privacy choices directly in app code.
+
+> **Status Note:** This repository is published for developer evaluation and UX testing. If you plan to deploy it in a production app subject to strict GDPR/ePrivacy enforcement, please review the **Legal Compliance & Production Checklist** below before shipping.
 
 ## Features
 
-- **Automatic SDK detection** — scans for Firebase, Facebook, Google Ads, AppsFlyer, Adjust, Mixpanel, Amplitude, and more
-- **Consent UI** — Material Design dialog with per-category toggles
-- **Runtime configuration** — SDKs are enabled/disabled based on consent
-- **Offline support** — Room database stores consent locally; WorkManager syncs when the network is available
-- **IAB TCF 2.2** — generates a TC string compatible with the IAB framework
-- **Google Consent Mode v2** — sets `ad_storage`, `analytics_storage`, `ad_user_data`, `ad_personalization` signals
-- **Debug overlay** — optional on-screen debug panel in development builds
+- **Lightweight On-Device Engine** — ~380 KB AAR with local enforcement and zero heavy WebView dependencies
+- **Automatic SDK Detection** — Scans DEX/classes for Firebase, Facebook, Google Ads, AppsFlyer, Adjust, Mixpanel, Amplitude, and more
+- **Consent UI** — Native Android dialog with first-layer Accept All, Reject All, and per-category toggles
+- **Runtime Configuration** — Toggles collection flags on supported SDKs via reflection and exposes `ConsentSDK.isConsentGiven(...)` for call-site gating
+- **Offline-First Storage** — Room database stores consent records locally; optional WorkManager sync when online
+- **Consent Mode & TCF Scaffolding** — Includes basic structures for Google Consent Mode v2 and IAB TCF signals *(see production notes below)*
+- **Debug Overlay** — Optional on-screen debug panel in development builds
 
 ## Requirements
 
@@ -45,7 +47,7 @@ dependencies {
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 ```
 
-### 2. Initialize in your `Application` class
+### 2. Initialize in your Application class
 
 ```kotlin
 class MyApp : Application() {
@@ -53,7 +55,8 @@ class MyApp : Application() {
         super.onCreate()
 
         CookiePrime.init(this, "YOUR_LICENSE_KEY") { 
-            enableDebug = true 
+            enableDebug = true
+            offlineMode = true // Recommended for pure on-device storage
         }
     }
 }
@@ -76,23 +79,51 @@ if (ConsentSDK.isAnalyticsConsentGiven) {
 }
 ```
 
+---
+
+## ⚖️ Legal Compliance & Production Checklist (GDPR / ePrivacy)
+
+If you are using this SDK solely to evaluate the UI/UX flow, the Quick Start above works out of the box. However, if you want to deploy this codebase in production for **strict legal compliance** (GDPR, ePrivacy, CNIL/EDPB guidelines), apply the following adjustments (estimated ~2–4 days of engineering work):
+
+1. **Disable Pre-Ticked Non-Essential Toggles (Required by GDPR)**
+   - In `CategoryConfig.kt` (`createDefaultCategories()`) and `ConsentActivity.kt` (`getDefaultForCategory()`), `analytics`, `personalization`, and `performance` currently default to `true`.
+   - **Fix:** Change all non-essential defaults to `false` so only `essential` is enabled prior to affirmative user opt-in.
+
+2. **Prevent Pre-Consent SDK Auto-Initialization**
+   - Runtime reflection setters cannot undo network pings sent before `ConsentSDK` runs.
+   - **Fix:** Disable auto-init in your host app's `AndroidManifest.xml` (e.g., `firebase_analytics_collection_deactivated = true`, `com.facebook.sdk.AutoInitEnabled = false`), and remove `tryInitializeFacebook()` in `SDKConfigurator.kt` when consent is denied.
+
+3. **Equalize Button Visual Weight & Handle System Back Gesture**
+   - In `ConsentActivity.kt`, `Accept All` uses a high-contrast background while `Reject All` uses default styling, and pressing the hardware Back button dismisses the dialog without recording a choice.
+   - **Fix:** Give `Accept All` and `Reject All` identical visual prominence (avoiding "dark pattern" nudging) and intercept `onBackPressedDispatcher` to record an explicit refusal (`ALL_DENIED`) if dismissed.
+
+4. **Data Minimization & Transport Security (`offlineMode` / `LicenseValidator.kt`)**
+   - By default, `LicenseValidator.kt` points to a raw `http://` endpoint and attaches `X-Device-ID` headers before consent is granted, while `UploadConsentRequest` includes device/session identifiers.
+   - **Fix:** Run with `offlineMode = true` for pure on-device Room audit logs, or update the endpoint to `https://` and strip `X-Device-ID` from pre-consent requests.
+
+5. **Note on Google Consent Mode v2 & IAB TCF v2.2**
+   - **Legal vs. Commercial:** Google CMP certification and IAB TCF strings are commercial ad-tech industry standards, not legal requirements under GDPR. For non-ad-supported apps (e.g., analytics/SaaS), they are not legally required.
+   - **Current Code State:** `ComplianceManager.kt` currently contains placeholder/stub logic (writing Google Consent Mode flags to a local `cookieprime_gcm_simple` file rather than calling `FirebaseAnalytics.setConsent(...)`, and generating a non-binary string in `buildTcString()`). If you monetize with **AdMob or Google Ads in the EEA/UK**, remove `buildTcString()` and pair your app with Google's official UMP SDK instead.
+
+---
+
 ## Project Structure
 
-```
+```text
 src/main/java/com/cookieprime/
 ├── CookiePrime.kt                    # Public entry point
 └── consent/
     ├── ConsentSDK.kt                 # Core SDK
-    ├── compliance/                   # IAB TCF + Google Consent Mode
-    ├── configuration/                # Category config + remote config
-    ├── detection/                    # SDK scanner
+    ├── compliance/                   # ConsentMode + ComplianceManager stubs
+    ├── configuration/                # CategoryConfig + SDKConfigurator
+    ├── detection/                    # DependencyScanner
     ├── initializer/                  # Auto-init via androidx.startup
     ├── license/                      # License validation
     ├── models/                       # Data classes
-    ├── network/                      # Retrofit/OkHttp client
+    ├── network/                      # OkHttp client & DTOs
     ├── proof/                        # Consent proof hashing
     ├── storage/                      # Room database
-    ├── ui/                           # Consent Activity + adapter
+    ├── ui/                           # ConsentActivity + adapter
     ├── utils/                        # Helpers
     ├── work/                         # WorkManager workers
     └── wrappers/                     # Safe SDK wrappers
@@ -100,8 +131,8 @@ src/main/java/com/cookieprime/
 
 ## License
 
-Proprietary. See [LICENSE.md](LICENSE.md) for details.
+Proprietary. See `LICENSE.md` for details.
 
 ## Support
 
-For issues and questions, open a GitHub issue or email samir.moukhliss@cookieprime.com.
+For issues and questions, open a GitHub issue or email `samir.moukhliss@cookieprime.com`.
